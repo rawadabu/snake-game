@@ -5,6 +5,10 @@ from food import Food
 from snake import Snake
 import time
 
+# with open("high_score.txt") as file:
+#     contents = file.read()
+#     print(contents)
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
@@ -35,13 +39,15 @@ while game_in_on:
     # Collusion with wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor(
     ) > 280 or snake.head.ycor() < -280:
-        game_in_on = False
-        score_board.game_over()
+        score_board.reset()
+        snake.reset()
 
     # Collusion with tail
     for segment in snake.segments[1:]:
+        if segment == snake.head:
+            pass
         if snake.head.distance(segment) < 10:
-            game_in_on = False
-            score_board.game_over()
+            score_board.reset()
+            snake.reset()
 
 screen.exitonclick()
